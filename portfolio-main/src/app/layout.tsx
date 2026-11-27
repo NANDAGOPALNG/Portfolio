@@ -1,0 +1,151 @@
+import type { Metadata } from 'next';
+import { SITE_URL } from '@/lib/site';
+import { Bricolage_Grotesque, Plus_Jakarta_Sans, Caveat, Fira_Code } from 'next/font/google';
+import './globals.css';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import CustomCursor from '@/components/shared/CustomCursor';
+import ScrollProgress from '@/components/shared/ScrollProgress';
+import ScrollToTop from '@/components/shared/ScrollToTop';
+import SmoothScroll from '@/components/shared/SmoothScroll';
+import EasterEgg from '@/components/shared/EasterEgg';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-bricolage',
+  display: 'swap',
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-jakarta',
+  display: 'swap',
+});
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  variable: '--font-caveat',
+  display: 'swap',
+});
+
+const fira = Fira_Code({
+  subsets: ['latin'],
+  variable: '--font-fira',
+  display: 'swap',
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: 'Nanda Gopal D · Backend & AI Engineer · Portfolio',
+  description: 'Backend and AI engineering student at MIT Mysuru (2027) and SDE Intern at TheWordofMouth. I build RAG platforms, agentic AI systems and reliable backends. Open to paid internships in Bangalore.',
+  keywords: [
+    'Nanda Gopal D',
+    'AI Engineer',
+    'Machine Learning',
+    'FastAPI',
+    'Agentic AI',
+    'Backend Developer',
+    'MIT Mysuru',
+    'RAG',
+    'Django',
+    'TheWordofMouth',
+    'Portfolio'
+  ],
+  authors: [{ name: 'Nanda Gopal D', url: SITE_URL }],
+  creator: 'Nanda Gopal D',
+  icons: {
+    icon: '/icon',
+    apple: '/apple-icon',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: SITE_URL,
+    title: 'Nanda Gopal D · Backend & AI Engineer · Portfolio',
+    description: 'Backend and AI engineering student at MIT Mysuru and SDE Intern at TheWordofMouth. Builder of RAG platforms and agentic AI systems.',
+    siteName: 'Nanda Gopal D Portfolio',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Nanda Gopal D Portfolio' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Nanda Gopal D · AI & Backend Engineer',
+    description: 'Backend and AI engineering student at MIT Mysuru and SDE Intern at TheWordofMouth.',
+    images: ['/opengraph-image'],
+  },
+};
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Nanda Gopal D',
+  url: SITE_URL,
+  jobTitle: 'Backend & AI Engineer (SDE Intern)',
+  worksFor: {
+    '@type': 'Organization',
+    name: 'TheWordofMouth',
+  },
+  alumniOf: {
+    '@type': 'EducationalOrganization',
+    name: 'Maharaja Institute of Technology Mysuru',
+  },
+  sameAs: [
+    'https://github.com/NANDAGOPALNG',
+    'https://www.linkedin.com/in/nanda-gopal-d-1b623229b',
+  ],
+  knowsAbout: [
+    'Backend Engineering',
+    'Python',
+    'FastAPI',
+    'Django',
+    'Retrieval-Augmented Generation',
+    'Agentic AI',
+    'PostgreSQL',
+    'Next.js',
+  ],
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html
+      lang="en"
+      className={`${bricolage.variable} ${jakarta.variable} ${caveat.variable} ${fira.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+      </head>
+      <body className="bg-[#faf7ee] text-[#18181b] min-h-screen flex flex-col antialiased selection:bg-[#fde047] selection:text-[#18181b]" suppressHydrationWarning>
+        {/* Accessible Skip Link */}
+        <a
+          href="#projects"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#fde047] focus:text-[#18181b] focus:border-2 focus:border-[#18181b] focus:rounded-xl focus:shadow-[3px_3px_0px_#18181b] focus:font-bold"
+        >
+          Skip to main work
+        </a>
+
+        <SmoothScroll>
+          <ScrollProgress />
+          <CustomCursor />
+          <EasterEgg />
+          <Navbar />
+          <main className="flex-grow pt-20 container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 overflow-x-clip">
+            {children}
+          </main>
+          <Footer />
+          <ScrollToTop />
+          <Analytics />
+          <SpeedInsights />
+        </SmoothScroll>
+      </body>
+    </html>
+  );
+}
